@@ -38,5 +38,13 @@ get_past_data <- function(username, password, icao24, start_time) {
                              "states.11" = "true_track", "states.12" = "vertical_rate",
                              "states.13" = "sensors", "states.14" = "geo_altitude",
                              "states.15" = "squawk", states.16 = "spi", "states.17" = "position_source"))
-  return(state_vectors_df)
+  state_vectors_df$longitude = as.numeric(as.character(state_vectors_df$longitude))
+  state_vectors_df$latitude = as.numeric(as.character(state_vectors_df$latitude))
+  state_vectors_df$velocity = as.numeric(as.character(state_vectors_df$velocity))
+  state_vectors_df$baro_altitude = as.numeric(as.character(state_vectors_df$baro_altitude))
+  state_vectors_df$geo_altitude = as.numeric(as.character(state_vectors_df$geo_altitude))
+  proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  state_vectors_sf <- st_as_sf(state_vectors_df, coords = c("longitude", "latitude"), crs = proj)
+  return(state_vectors_sf)
 }
+
