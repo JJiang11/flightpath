@@ -47,3 +47,4 @@ get_past_data <- function(username, password, icao24, start_time) {
   state_vectors_sf <- st_as_sf(state_vectors_df, coords = c("longitude", "latitude"), crs = proj)
   return(state_vectors_sf)
 }
+
