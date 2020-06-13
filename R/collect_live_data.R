@@ -1,5 +1,5 @@
-#' @title collect_live_data
-#' @name collect_live_data
+#' @title get_live_data
+#' @name get_live_data
 #' @description Retrive all flight vectors every 5 seconds
 #'  starting now up to a specified time into the future
 #' @param username Your 'OpenSky Network' username.
@@ -15,15 +15,30 @@
 #' @export
 #' @import openskyr
 
-collect_live_data <- function(username, password, duration) {
+get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
   current_time = as.numeric(as.POSIXct(Sys.time()))
   start_time = current_time
-  state_vectors_df = get_state_vectors(username = username, password = password)
+  state_vectors_df = get_state_vectors(username = username, password = password, ...)
+  icao24_arg = icao24
+  if(!is.null(icao24_arg)){
+    state_vectors_df = state_vectors_df %>%
+      filter(icao24 == icao24_arg)
+  }
   Sys.sleep(5)
   while (current_time < start_time + duration) {
-    state_vectors_df <- rbind(state_vectors_df, get_state_vectors(username = username, password = password))
+    next_df = get_state_vectors(username = username, password = password, ...)
+    if(!is.null(icao24_arg)){
+      next_df = next_df %>%
+        filter(icao24 == icao24_arg)
+    }
+    state_vectors_df = rbind(state_vectors_df, next_df)
     Sys.sleep(5)
     current_time = as.numeric(as.POSIXct(Sys.time()))
+  }
+  if(!is.null(icao24_arg)){
+    proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+    state_vectors_sf <- st_as_sf(state_vectors_df, coords = c("longitude", "latitude"), crs = proj)
+    return(state_vectors_sf)
   }
   return(state_vectors_df)
 }
