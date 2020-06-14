@@ -44,12 +44,6 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
     #(e.g. plane is travelling fast and straight)
     smooth_line = data_line
   }
-  #plot(smooth_line)
-  #plot(data1,add=TRUE)
-  #nrst_pts = st_cast(st_nearest_points(data1,smooth_line),"POINT")
-  #snapped = nrst_pts[seq.int(2L,length(nrst_pts),2L)]
-  #plot(snapped)
-  #plot(smooth_line,add=TRUE)
 
   #create list of snap sfs by applying st_snap for each observation
   snaps = lapply(1:nrow(data1), function(i){

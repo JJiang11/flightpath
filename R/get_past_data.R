@@ -4,7 +4,7 @@
 #'
 #' @param username Your 'OpenSky Network' username.
 #' @param password Your 'OpenSky Network' password.
-#' @param start_seconds_ago HAmount of time (in seconds) before current time when user wants to start
+#' @param start_seconds_ago Amount of time (in seconds) before current time when user wants to start
 #' collecting state vectors.
 #' @param icao24 Unique ICAO 24-bit address of the transponder in hex string
 #' representation. All letters need to be lower case.
@@ -27,6 +27,7 @@
 #' @export
 
 get_past_data <- function(username, password, start_seconds_ago, icao24) {
+  #gets current unix time
   current_time = floor(as.numeric(as.POSIXct(Sys.time())))
   test_time = current_time - start_seconds_ago
 
@@ -35,6 +36,7 @@ get_past_data <- function(username, password, start_seconds_ago, icao24) {
   url3 = "@opensky-network.org/api/states/all?time="
   url4 = "&icao24="
 
+  #creates complete url for API query
   url = paste(url1, username, url2, password, url3, current_time, url4, icao24, sep = "")
   state_vectors_df <- as.data.frame(fromJSON(url))
 
@@ -53,6 +55,7 @@ get_past_data <- function(username, password, start_seconds_ago, icao24) {
                              "states.13" = "sensors", "states.14" = "geo_altitude",
                              "states.15" = "squawk", "states.16" = "spi", "states.17" = "position_source"))
 
+  #changes column data types
   state_vectors_df$time = NULL
   state_vectors_df$icao24 = as.character(state_vectors_df$icao24)
   state_vectors_df$callsign = as.character(state_vectors_df$callsign)
@@ -73,6 +76,7 @@ get_past_data <- function(username, password, start_seconds_ago, icao24) {
   state_vectors_df$latitude = as.numeric(as.character(state_vectors_df$latitude))
 
   proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+  #creates sf from dataframe
   state_vectors_sf <- st_as_sf(state_vectors_df, coords = c("longitude", "latitude"), crs = proj)
 
   return(state_vectors_sf)
