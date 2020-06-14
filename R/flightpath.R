@@ -82,6 +82,8 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
   lin_ref = do.call("rbind",lin_ref)
   #replace the buffer(polygon & multipolygon) geometry with segment geometry
   lin_ref$geometry = st_geometry(segs)
+  #reproject to 4326
+  lin_ref = st_transform(lin_ref, "+proj=longlat +datum=WGS84 +no_defs")
   #return sf
   return(lin_ref)
 }
