@@ -24,18 +24,18 @@
 get_data <- function(username, password, icao24, start_time = NULL, duration = NULL) {
   if (is.null(start_time) && is.null(duration)) {
     current_time = floor(as.numeric(as.POSIXct(Sys.time())))
-    state_vectors_df = get_past_data(username, password, current_time, icao24)
+    state_vectors_sf = get_past_data(username, password, current_time, icao24)
   }
   else if (is.null(duration)) {
-    state_vectors_df = get_past_data(username, password, start_time, icao24)
+    state_vectors_sf = get_past_data(username, password, start_time, icao24)
   }
   else if (is.null(start_time)) {
-    state_vectors_df = get_live_data(username, password, duration, icao24)
+    state_vectors_sf = get_live_data(username, password, duration, icao24)
   }
   else {
-    past_state_vectors_df = get_past_data(username, password, start_time, icao24)
-    new_state_vectors_df = get_live_data(username, password, duration, icao24)
-    state_vectors_df = rbind(past_state_vectors_df, new_state_vectors_df)
+    past_state_vectors_sf = get_past_data(username, password, start_time, icao24)
+    new_state_vectors_sf = get_live_data(username, password, duration, icao24)
+    state_vectors_df = rbind(past_state_vectors_sf, new_state_vectors_sf)
   }
-  return(state_vectors_df)
+  return(state_vectors_sf)
 }
