@@ -49,8 +49,3 @@ plot_map <- function(data, variable, view = TRUE) {
   return(map)
 }
 
-xcv = create_path(data)
-xcv
-vbn = plot_map(xcv, "baro_altitude", TRUE)
-vbn
-vbn
