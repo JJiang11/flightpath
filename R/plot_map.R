@@ -6,7 +6,7 @@
 #' @param view Boolean (default TRUE) that specifies if the map returned should be an interactive view map
 #' or a stationary plot map, the latter of which conains cartographic elements.
 #'
-#' @return tmap of plane path on top of an OpenTopoMap basemap
+#' @return tmap of plane path on top of an OpenTopoMap basemap (view) or polygon world map (plot).
 #'
 #' @examples
 #' \dontrun{plot_map(data, "velocity")}
@@ -42,7 +42,7 @@ plot_map <- function(data, variable, view = TRUE) {
   tmap_mode("view")
 
   map <- tm_basemap(leaflet::providers$OpenTopoMap, alpha = 0.5) +
-    tm_shape(lab_data[variable]) +
+    tm_shape(data[variable]) +
     tm_lines(col = variable, lwd = 5) +
     tm_layout(title = variable)
 
@@ -51,6 +51,6 @@ plot_map <- function(data, variable, view = TRUE) {
 
 xcv = create_path(data)
 xcv
-vbn = plot_map(xcv, "baro_altitude", FALSE)
+vbn = plot_map(xcv, "baro_altitude", TRUE)
 vbn
 vbn
