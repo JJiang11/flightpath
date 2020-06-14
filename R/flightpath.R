@@ -28,6 +28,10 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
   data1 = st_transform(data,st_crs(lonlat2UTM(st_coordinates(st_geometry(data[1])))))
   #remove duplicate columns
   data1 = data1 %>% distinct(time_position,.keep_all=TRUE)
+  #retrieve and save aircraft identifying information
+  ic24 = first(data1$icao24)
+  cs = first(data1$callsign)
+  ogc = first(data1$origin_country)
   #create multipoint and then linestring
   data_line = st_cast(summarize(data1,do_union = FALSE),"LINESTRING")
   #begin geo operations
@@ -84,6 +88,8 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
   lin_ref = do.call("rbind",lin_ref)
   #replace the buffer(polygon & multipolygon) geometry with segment geometry
   lin_ref$geometry = st_geometry(segs)
+  #add back identifying aircraft info
+  lin_ref = cbind(icao24 = ic24, callsign = cs, origin_country = ogc, lin_ref)
   #reproject to 4326
   lin_ref = st_transform(lin_ref, "+proj=longlat +datum=WGS84 +no_defs")
   #return sf
