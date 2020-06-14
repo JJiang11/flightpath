@@ -11,7 +11,7 @@
 #' @param duration Amount of time (in seconds) for which to collect live data. Does not need to be
 #' specified if user only wants past and/or current state vectors
 #'
-#' @return A dataframe of state vectors for every 5-second snapshot, from the start time to end of duration.
+#' @return An sf object of state vectors for every 5-second snapshot, from the start time to end of duration.
 #'
 #'
 #' @examples
