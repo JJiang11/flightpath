@@ -14,7 +14,7 @@
 #' \dontrun{collect_live_data(username = "your_username", password = "your_password",
 #'  duration = 30)}
 #'
-#' @export
+#' @export get_live_data
 #' @import openskyr, sf, tidyverse, httr, tidyr
 
 get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
