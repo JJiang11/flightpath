@@ -4,7 +4,8 @@
 #'
 #' @param username Your 'OpenSky Network' username.
 #' @param password Your 'OpenSky Network' password.
-#' @param start_time Unix time in seconds since epoch, and when to start collecting data for the plane.
+#' @param start_seconds_ago HAmount of time (in seconds) before current time when user wants to start
+#' collecting state vectors.
 #' @param icao24 Unique ICAO 24-bit address of the transponder in hex string
 #' representation. All letters need to be lower case
 #'
@@ -13,14 +14,14 @@
 #'
 #' @examples
 #' \dontrun{get_past_data(username = "your_username", password = "your_password",
-#'  time = 1592100547, icao24 = 3c4b26)}
+#'  start_seconds_ago = 600, icao24 = "3c4b26")}
 #'
 #' @export
 #' @import httr, sf, rjson, dplyr, jsonlite, RCurl, plyr
 
-get_past_data <- function(username, password, start_time, icao24) {
-  test_time = start_time
+get_past_data <- function(username, password, start_seconds_ago, icao24) {
   current_time = floor(as.numeric(as.POSIXct(Sys.time())))
+  test_time = current_time - start_seconds_ago
 
   url1 = "https://opensky-network.org/api/states/all?time="
   url2 = "&icao24="

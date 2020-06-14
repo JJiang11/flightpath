@@ -6,8 +6,8 @@
 #' @param password Your 'OpenSky Network' password.
 #' @param icao24 Unique ICAO 24-bit address of the transponder in hex string
 #' representation. All letters need to be lower case.
-#' @param start_time Unix time in seconds since epoch, and when to start collecting data for the plane.
-#' Does not need to be specified if user only want current and/or state vectors.
+#' @param start_seconds_ago Amount of time (in seconds) before current time user wants to start
+#' collecting state vectors. Does not need to be specified if user only want current and/or future state vectors.
 #' @param duration Amount of time (in seconds) for which to collect live data. Does not need to be
 #' specified if user only wants past and/or current state vectors
 #'
@@ -16,24 +16,24 @@
 #'
 #' @examples
 #' \dontrun{get_data(username = "your_username", password = "your_password", icao24 = "a8699a",
-#'  start_time = 1592100547, duration = 300)}
+#'  start_seconds_ago = 600, duration = 300)}
 #'
 #' @export
 #' @import openskyr, sf, tidyverse, httr, tidyr, rjson, dplyr, jsonlite, RCurl, plyr
 
-get_data <- function(username, password, icao24, start_time = NULL, duration = NULL) {
-  if (is.null(start_time) && is.null(duration)) {
+get_data <- function(username, password, icao24, start_seconds_ago = NULL, duration = NULL) {
+  if (is.null(start_seconds_ago) && is.null(duration)) {
     current_time = floor(as.numeric(as.POSIXct(Sys.time())))
     state_vectors_sf = get_past_data(username, password, current_time, icao24)
   }
   else if (is.null(duration)) {
-    state_vectors_sf = get_past_data(username, password, start_time, icao24)
+    state_vectors_sf = get_past_data(username, password, start_seconds_ago, icao24)
   }
-  else if (is.null(start_time)) {
+  else if (is.null(start_seconds_ago)) {
     state_vectors_sf = get_live_data(username, password, duration, icao24)
   }
   else {
-    past_state_vectors_sf = get_past_data(username, password, start_time, icao24)
+    past_state_vectors_sf = get_past_data(username, password, start_seconds_ago, icao24)
     new_state_vectors_sf = get_live_data(username, password, duration, icao24)
     state_vectors_sf = rbind(past_state_vectors_sf, new_state_vectors_sf)
   }
