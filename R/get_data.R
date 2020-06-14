@@ -35,7 +35,7 @@ get_data <- function(username, password, icao24, start_time = NULL, duration = N
   else {
     past_state_vectors_sf = get_past_data(username, password, start_time, icao24)
     new_state_vectors_sf = get_live_data(username, password, duration, icao24)
-    state_vectors_df = rbind(past_state_vectors_sf, new_state_vectors_sf)
+    state_vectors_sf = rbind(past_state_vectors_sf, new_state_vectors_sf)
   }
   return(state_vectors_sf)
 }
