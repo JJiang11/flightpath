@@ -16,8 +16,15 @@
 #' \dontrun{get_past_data(username = "your_username", password = "your_password",
 #'  start_seconds_ago = 600, icao24 = "3c4b26")}
 #'
+#' @Imports:
+#'     httr,
+#'     sf,
+#'     rjson,
+#'     dplyr,
+#'     jsonlite,
+#'     RCurl,
+#'     plyr
 #' @export
-#' @import httr, sf, rjson, dplyr, jsonlite, RCurl, plyr
 
 get_past_data <- function(username, password, start_seconds_ago, icao24) {
   current_time = floor(as.numeric(as.POSIXct(Sys.time())))
