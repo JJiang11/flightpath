@@ -37,6 +37,16 @@ get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
     Sys.sleep(5)
     current_time = as.numeric(as.POSIXct(Sys.time()))
   }
+  state_vectors_df = as.data.frame(state_vectors_df)
+  #get state vectors function output uses columns which are lists
+  #for loop produces a tibble which unlists the columns
+  for(name in head(names(state_vectors_df),-1)){
+    if(!is.null(state_vectors_df[name][[1]][[1]])){
+      state_vectors_df = unnest_longer(state_vectors_df,name)
+    }
+  }
+  #back to normal data frame
+  state_vectors_df = as.data.frame(state_vectors_df)
   if(!is.null(icao24_arg)){
     proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
     state_vectors_sf <- st_as_sf(state_vectors_df, coords = c("longitude", "latitude"), crs = proj)
@@ -44,3 +54,4 @@ get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
   }
   return(state_vectors_df)
 }
+
