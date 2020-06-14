@@ -7,7 +7,7 @@
 #' @param icao24 Unique ICAO 24-bit address of the transponder in hex string
 #' representation. All letters need to be lower case.
 #' @param start_seconds_ago Amount of time (in seconds) before current time user wants to start
-#' collecting state vectors. Does not need to be specified if user only want current and/or future state vectors.
+#' collecting state vectors. Does not need to be specified if user only wants current and/or future state vectors.
 #' @param duration Amount of time (in seconds) for which to collect live data. Does not need to be
 #' specified if user only wants past and/or current state vectors
 #'
@@ -23,6 +23,7 @@
 
 get_data <- function(username, password, icao24, start_seconds_ago = NULL, duration = NULL) {
   if (is.null(start_seconds_ago) && is.null(duration)) {
+    #gets current unix time
     current_time = floor(as.numeric(as.POSIXct(Sys.time())))
     state_vectors_sf = get_past_data(username, password, current_time, icao24)
   }
