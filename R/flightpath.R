@@ -1,6 +1,6 @@
 library(smoothr)
 library(FNN)
-data = load("SIA317.rda")
+data = load("data/SIA317.RData")
 data
 crs = data[1] %>%
   st_geometry() %>%
@@ -8,7 +8,7 @@ crs = data[1] %>%
   lonlat2UTM() %>%
   st_crs
 data1 = st_transform(data,st_crs(lonlat2UTM(st_coordinates(st_geometry(data[1])))))
-data1 = data1 %>% distinct()
+data1 = data1 %>% distinct(time_position,.keep_all=TRUE)
 data_line = st_cast(summarize(data1,do_union = FALSE),"LINESTRING")
 plot(data_line)
 smooth_line = smooth(data_line,method = "ksmooth")
@@ -24,10 +24,11 @@ snaps = lapply(1:nrow(data1), function(i){
   return(ohsnap)
 })
 bound = do.call("rbind",snaps)
-bufo = st_buffer(bound,200)
-plot(bound)
+nn = get.knn(st_coordinates(bound),k=1)
+bufo = st_buffer(bound,nn$nn.dist/3)
+plot(bufo)
 e = st_collection_extract(lwgeom::st_split(smooth_line,bufo),"LINESTRING")
-withins = st_is_within_distance(e,bufo,dist=1)
+withins = st_is_within_distance(e,bufo,dist=10)
 lin_ref = lapply(1:nrow(withins), function(i){
   summarize_if(bufo[withins[[i]],],is.numeric,mean)
 })
