@@ -1,18 +1,20 @@
 #' @title create_path
 #' @name create_path
-#' @description convert point flight data into a chained path
+#' @description Convert point flight data into a chained path.
 #' @param data sf of points in order, joined with nonspatial flight data representing one aircraft over time
-#' @param smooth boolean, default TRUE. which activates the smoothing algorithm from smoothr
-#' @param method optional, smoothing algorithm to be used, default ksmooth. See smoothr documentation.
-#' @param smoothness optional, degree of smoothness, default 1. See smoothr documentation.
+#' @param smooth Boolean, default TRUE. which activates the smoothing algorithm from smoothr.
+#' @param method Optional, smoothing algorithm to be used, default ksmooth. See smoothr documentation.
+#' @param smoothness Optional, degree of smoothness, default 1. See smoothr documentation.
 #'
 #' @return sf of linestrings and interpolated nonspatial data.
 #'
 #' @examples
 #' \dontrun{create_path(get_live_data("username","password",duration=100,icao="000000"))}
 #'
+#' @import smoothr
+#' @import FNN
+#' @import dplyr
 #' @export create_path
-#' @import smoothr, FNN, dplyr
 
 create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
   #reproject to mercator for compatibility with st_snap
