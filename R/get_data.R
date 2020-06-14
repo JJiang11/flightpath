@@ -19,7 +19,7 @@
 #'  start_time = 1592100547, duration = 300)}
 #'
 #' @export
-#' @import openskyr, httr, sf, rjson, dplyr, jsonlite, RCurl, plyr
+#' @import openskyr, sf, tidyverse, httr, tidyr, rjson, dplyr, jsonlite, RCurl, plyr
 
 get_data <- function(username, password, icao24, start_time = NULL, duration = NULL) {
   if (is.null(start_time) && is.null(duration)) {

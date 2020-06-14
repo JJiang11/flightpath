@@ -18,7 +18,7 @@
 #' @import openskyr, sf, tidyverse, httr, tidyr
 
 get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
-  current_time = as.numeric(as.POSIXct(Sys.time()))
+  current_time = floor(as.numeric(as.POSIXct(Sys.time())))
   start_time = current_time
 
   state_vectors_df = get_state_vectors(username = username, password = password, ...)

@@ -47,18 +47,18 @@ get_past_data <- function(username, password, start_time, icao24) {
   state_vectors_df$icao24 = as.character(state_vectors_df$icao24)
   state_vectors_df$callsign = as.character(state_vectors_df$callsign)
   state_vectors_df$origin_country = as.character(state_vectors_df$origin_country)
-  state_vectors_df$time_position = as.numeric(as.character(state_vectors_df$time_position))
-  state_vectors_df$last_contact = as.numeric(as.character(state_vectors_df$last_contact))
+  state_vectors_df$time_position = as.integer(as.character(state_vectors_df$time_position))
+  state_vectors_df$last_contact = as.integer(as.character(state_vectors_df$last_contact))
   state_vectors_df$baro_altitude = as.numeric(as.character(state_vectors_df$baro_altitude))
   state_vectors_df$on_ground = as.logical(as.character(state_vectors_df$on_ground))
   state_vectors_df$velocity = as.numeric(as.character(state_vectors_df$velocity))
   state_vectors_df$true_track = as.numeric(as.character(state_vectors_df$true_track))
-  state_vectors_df$vertical_rate = as.numeric(as.character(state_vectors_df$vertical_rate))
+  state_vectors_df$vertical_rate = as.integer(as.character(state_vectors_df$vertical_rate))
   state_vectors_df$sensors = as.null(as.character(state_vectors_df$sensors))
   state_vectors_df$geo_altitude = as.numeric(as.character(state_vectors_df$geo_altitude))
   state_vectors_df$squawk = as.character(state_vectors_df$squawk)
   state_vectors_df$spi = as.logical(as.character(state_vectors_df$spi))
-  state_vectors_df$position_source = as.integer(as.character(state_vectors_df$position_source))
+  state_vectors_df$position_source = as.list(as.character(state_vectors_df$position_source))
   state_vectors_df$longitude = as.numeric(as.character(state_vectors_df$longitude))
   state_vectors_df$latitude = as.numeric(as.character(state_vectors_df$latitude))
 
@@ -67,7 +67,3 @@ get_past_data <- function(username, password, start_time, icao24) {
 
   return(state_vectors_sf)
 }
-
-test = get_past_data("AdrianDP1", "GIS3", 1592120210, "89631d")
-test
-str(test)
