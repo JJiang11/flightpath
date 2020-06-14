@@ -1,15 +1,15 @@
 #' @title get_past_data
 #' @name get_past_data
-#' @description Retrieve state vectors for a specific plane if the desired start time is before the current time
+#' @description Retrieve state vectors for a specific plane if the desired start time is before the current time.
 #'
 #' @param username Your 'OpenSky Network' username.
 #' @param password Your 'OpenSky Network' password.
 #' @param start_seconds_ago HAmount of time (in seconds) before current time when user wants to start
 #' collecting state vectors.
 #' @param icao24 Unique ICAO 24-bit address of the transponder in hex string
-#' representation. All letters need to be lower case
+#' representation. All letters need to be lower case.
 #'
-#' @return A dataframe of state vectors for every 5-second snapshot, from the start time to current time
+#' @return An sf object of state vectors for every 5-second snapshot, from the start time to current time
 #'
 #'
 #' @examples
