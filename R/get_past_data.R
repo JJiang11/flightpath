@@ -23,14 +23,16 @@ get_past_data <- function(username, password, start_seconds_ago, icao24) {
   current_time = floor(as.numeric(as.POSIXct(Sys.time())))
   test_time = current_time - start_seconds_ago
 
-  url1 = "https://opensky-network.org/api/states/all?time="
-  url2 = "&icao24="
+  url1 = "https://"
+  url2 = ":"
+  url3 = "@opensky-network.org/api/states/all?time="
+  url4 = "&icao24="
 
-  url = paste(url1, current_time, url2, icao24, sep = "")
+  url = paste(url1, username, url2, password, url3, current_time, url4, icao24, sep = "")
   state_vectors_df <- as.data.frame(fromJSON(url))
 
   while (test_time < current_time) {
-    url = paste(url1, test_time, url2, icao24, sep = "")
+    url = paste(url1, username, url2, password, url3, test_time, url4, icao24, sep = "")
     state_vectors_df <- rbind(state_vectors_df, as.data.frame(fromJSON(url)))
     test_time = test_time + 5
   }
