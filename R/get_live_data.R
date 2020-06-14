@@ -39,10 +39,13 @@ get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
   }
   state_vectors_df = as.data.frame(state_vectors_df)
   #get state vectors function output uses columns which are lists
-  #for loop produces a tibble which unlists the columns
+  #for loop produces a tibble which unlists the columns and removes NULL values
   for(name in head(names(state_vectors_df),-1)){
     if(!is.null(state_vectors_df[name][[1]][[1]])){
       state_vectors_df = unnest_longer(state_vectors_df,name)
+    }
+    else{
+      state_vectors_df[name] = as.null(state_vectors_df[name])
     }
   }
   #back to normal data frame
