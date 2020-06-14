@@ -41,7 +41,7 @@ get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
     Sys.sleep(5)
     current_time = as.numeric(as.POSIXct(Sys.time()))
     progress_str = paste("Live data: ",
-                         ((current_time - start_time)/(duration))*100,
+                         pmin(((current_time - start_time)/(duration))*100,100),
                          "% complete. ",nrow(state_vectors_df)," vectors collected.")
     print(progress_str)
   }
