@@ -1,3 +1,4 @@
+library(smoothr)
 data = load("SIA317.rda")
 data1 = st_transform(data,st_crs(lonlat2UTM(st_coordinates(st_geometry(data[1])))))
 data_line = st_cast(summarize(data1,do_union = FALSE),"LINESTRING")
@@ -16,7 +17,5 @@ snaps = lapply(1:nrow(data1), function(i){
 })
 bound = do.call("rbind",snaps)
 plot(bound)
-
-join = lapply(1:nrow(e), function(i){
-  if(e[i,])
-})
+e = st_collection_extract(lwgeom::st_split(smooth_line,bufo),"LINESTRING")
+withins = st_is_within_distance(e,bufo,dist=1)
