@@ -5,15 +5,17 @@
 #' @param username Your 'OpenSky Network' username.
 #' @param password Your 'OpenSky Network' password.
 #' @param duration Amount of time (in seconds) for which to collect live data
+#' @param icao24 Optional. Unique icao24 identifier for aircraft
 #'
-#' @return A dataframe of all state vectors retrieved during the collection period
+#' @return If icao24 is missing, A non-spatial dataframe of all state vectors retrieved during the collection period.
+#'   if icao24 specified, A geocoded sf is returned instead.
 #'
 #' @examples
 #' \dontrun{collect_live_data(username = "your_username", password = "your_password",
 #'  duration = 30)}
 #'
 #' @export
-#' @import openskyr
+#' @import openskyr, sf
 
 get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
   current_time = as.numeric(as.POSIXct(Sys.time()))
