@@ -15,18 +15,22 @@
 #'  duration = 30)}
 #'
 #' @export
-#' @import openskyr, sf
+#' @import openskyr, sf, tidyverse, httr, tidyr
 
 get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
   current_time = as.numeric(as.POSIXct(Sys.time()))
   start_time = current_time
+
   state_vectors_df = get_state_vectors(username = username, password = password, ...)
   icao24_arg = icao24
+
   if(!is.null(icao24_arg)){
     state_vectors_df = state_vectors_df %>%
       filter(icao24 == icao24_arg)
   }
+
   Sys.sleep(5)
+
   while (current_time < start_time + duration) {
     next_df = get_state_vectors(username = username, password = password, ...)
     if(!is.null(icao24_arg)){
@@ -37,7 +41,9 @@ get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
     Sys.sleep(5)
     current_time = as.numeric(as.POSIXct(Sys.time()))
   }
+
   state_vectors_df = as.data.frame(state_vectors_df)
+
   #get state vectors function output uses columns which are lists
   #for loop produces a tibble which unlists the columns and removes NULL values
   for(name in head(names(state_vectors_df),-1)){
@@ -48,13 +54,15 @@ get_live_data <- function(username, password, duration, icao24 = NULL, ...) {
       state_vectors_df[name] = as.null(state_vectors_df[name])
     }
   }
+
   #back to normal data frame
   state_vectors_df = as.data.frame(state_vectors_df)
   if(!is.null(icao24_arg)){
     proj = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
     state_vectors_sf <- st_as_sf(state_vectors_df, coords = c("longitude", "latitude"), crs = proj)
+
     return(state_vectors_sf)
   }
+
   return(state_vectors_df)
 }
-
