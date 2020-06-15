@@ -1,6 +1,6 @@
 #' @title plot_map
 #' @name plot_map
-#' @description Creates and returns a map object displaying plane's path and chosen variable information.
+#' @description Creates and returns a map object displaying aircraft path and chosen variable information.
 #' @param data sf of linestrings and interpolated nonspatial data.
 #' @param variable String of variable that user wants to respresent by color on the linestrings.
 #' @param view Boolean (default TRUE) that specifies if the map returned should be an interactive view map
