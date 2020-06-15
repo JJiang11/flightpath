@@ -39,7 +39,6 @@ We have provided a sample data set, which was created with the get_data() functi
 This dataframe depicts Singapore Airlines flight 38 on the final approach into LAX. It was served by a plane with `icao24` code 76cdb9.
 
 ```{r,results='hide'}
-load("../data/sia38.rda")
 plot(sia38)
 ```
 
@@ -75,14 +74,18 @@ get_live_data(username = "your_user",
               duration = 10)
 ```
 It is recommended that you specify a specific aircraft to track, if you want to create visualizations later and reduce the cost of your data collection.  
-Head over to [link](opensky-network.org/network/explorer) and take a look around. For best results, you should pick an airplane (but helicopters are possible), and preferably one that has just recently taken off, so you can see the twists and turns it will make. Click on the aircraft you would like to track, and copy its `Mode S Code (hex)`. This hexadecimal code is also known as `icao24` identifier, and it is the unique identifier for aircraft in the world.
+Head over to [link](opensky-network.org/network/explorer) and take a look around. For best results, you should pick an airplane (but helicopters are possible), and preferably one that has just recently taken off, so you can see the twists and turns it will make. Click on the aircraft you would like to track, and copy its `Mode S Code (hex)`. This hexadecimal code is also known as `icao24` identifier, and it is the unique identifier for aircraft in the world. For our purposes, input this as a string.
 
 ```{r live_icao, eval=FALSE}
 get_live_data(username = "your_user",
               password = "your_pass",
               duration = 100,
-              icao24 = 000000)
+              icao24 = "000000")
 ```
+
+If all goes well, your output should look like this to help keep you patient while waiting:
+
+![progress output](live_data_output.PNG){width=90%}
 
 ### Get Past Data
 With a user account, you can also pull historic data up to 1 hour in the past. `icao24` is required for this function.
@@ -90,7 +93,7 @@ With a user account, you can also pull historic data up to 1 hour in the past. `
 get_past_data(username = "your_user",
               password = "your_pass",
               start_seconds_ago = 100,
-              icao24 = 000000)
+              icao24 = "000000")
 ```
 
 ### Get Data
@@ -100,6 +103,16 @@ get_data(username = "your_user",
          password = "your_pass",
          start_seconds_ago = 100,
          duration = 100,
-         icao24 = 000000)
+         icao24 = "000000")
 ```
 
+## Roadmap for the future
+
+There is much more left to be accomplished! We can:  
+* allow customizable resolution of interpolation in `create_path`. Right now it is limited to 2x.  
+* allow most customizable plotting through `plot_map`  
+* provide support for 3D mapping, which would involve using smoothing for the altitude z-axis as well.  
+* allow user to suspend live data collection in case of poor internet connection, aircraft leaving range, or aircraft landing.  
+* use threading to collect live data for multiple aircrafts at once, once we gain more expertise in R.  
+* support visualizing and processing of multiple flightpaths at once.  
+* open to any feedback and suggestions from the Opensky community and/or CRAN.  
