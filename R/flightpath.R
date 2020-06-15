@@ -1,7 +1,7 @@
 #' @title create_path
 #' @name create_path
 #' @description Convert point flight data into a chained path.
-#' @param data sf of points in order, joined with nonspatial flight data representing one aircraft over time
+#' @param data sf of points in order, joined with nonspatial flight data representing one aircraft over time.
 #' @param smooth Boolean, default TRUE. which activates the smoothing algorithm from smoothr.
 #' @param method Optional, smoothing algorithm to be used, default ksmooth. See smoothr documentation.
 #' @param smoothness Optional, degree of smoothness, default 1. See smoothr documentation.
@@ -9,7 +9,7 @@
 #' @return sf of linestrings and interpolated nonspatial data.
 #'
 #' @examples
-#' \dontrun{create_path(get_live_data("username","password",duration=100,icao="000000"))}
+#' \dontrun{create_path(data_sf)}
 #'
 #' @import smoothr
 #' @import FNN
@@ -86,6 +86,7 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
   lin_ref = cbind(icao24 = ic24, callsign = cs, origin_country = ogc, lin_ref)
   #reproject to 4326
   lin_ref = st_transform(lin_ref, "+proj=longlat +datum=WGS84 +no_defs")
+
   #return sf
   return(lin_ref)
 }
