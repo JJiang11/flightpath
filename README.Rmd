@@ -2,11 +2,7 @@
 title: "README"
 author: "Jalen Jiang, Adrian Przezdziecki"
 date: "6/14/2020"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{README}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+output: rmarkdown::github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -24,7 +20,7 @@ This package pulls live and/or historic data from the Opensky API and allows you
 
 ## Data Flow
 
-![data diagram](data_diagram.png){width=80%}
+![data diagram](vignettes/data_diagram.png){width=80%}
 
 The provided data collection functions require opensky user authentication as inputs as well as parameters which specify the aircraft to track and time frame. The collected data can be inputted into `create_path` which turns the point data into a smoothed chain of line segments, which can inhance the visualization of the flight path.
 
@@ -93,7 +89,7 @@ get_live_data(username = "your_user",
 
 If all goes well, your output should look like this to help keep you patient while waiting:
 
-![progress output](live_data_output.PNG){width=90%}
+![progress output](vignettes/live_data_output.PNG){width=90%}
 
 ### Get Past Data
 With a user account, you can also pull historic data up to 1 hour in the past. `icao24` is required for this function.
@@ -124,3 +120,9 @@ There is much more left to be accomplished! We can:
 * use threading to collect live data for multiple aircrafts at once, once we gain more expertise in R.  
 * support visualizing and processing of multiple flightpaths at once.  
 * open to any feedback and suggestions from the Opensky community and/or CRAN.  
+
+## About Us
+
+Jalen Jiang is a third year undergraduate Geographic Studies major and Public Policy major at the University of Chicago.  
+Adrian Przezdziecki is a third year undergraduate Public Policy major and Computer Science minor at the University of Chicago.  
+Thank you for trying out our package.

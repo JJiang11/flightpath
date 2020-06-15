@@ -124,3 +124,9 @@ There is much more left to be accomplished! We can:
 * use threading to collect live data for multiple aircrafts at once, once we gain more expertise in R.  
 * support visualizing and processing of multiple flightpaths at once.  
 * open to any feedback and suggestions from the Opensky community and/or CRAN.  
+
+## About Us
+
+Jalen Jiang is a third year undergraduate Geographic Studies major and Public Policy major at the University of Chicago.  
+Adrian Przezdziecki is a third year undergraduate Public Policy major and Computer Science minor at the University of Chicago.  
+Thank you for trying out our package.
