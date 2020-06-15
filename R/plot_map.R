@@ -33,7 +33,7 @@ plot_map <- function(data, variable, view = TRUE) {
       tm_polygons() +
       tm_shape(data[variable]) +
       tm_lines(col = variable, lwd = 5) +
-      tm_layout(title = variable) +
+      tm_layout(title = paste(data$icao24[1], "Route", sep = " ")) +
       tm_compass() +
       tm_scale_bar()
 
@@ -45,7 +45,7 @@ plot_map <- function(data, variable, view = TRUE) {
   map <- tm_basemap(leaflet::providers$OpenTopoMap, alpha = 0.5) +
     tm_shape(data[variable]) +
     tm_lines(col = variable, lwd = 5) +
-    tm_layout(title = variable)
+    tm_layout(title = paste(data$icao24[1], "Route", sep = " "))
 
   return(map)
 }
