@@ -4,7 +4,7 @@ author: "Jalen Jiang, Adrian Przezdziecki"
 date: "6/14/2020"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Basic Usage}
+  %\VignetteIndexEntry{README}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -12,6 +12,11 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Follow Along
+
+Click here for a demo to follow along with this tutorial:  
+[link](https://rstudio.cloud/project/1384039)
 
 ## Background
 
@@ -31,6 +36,7 @@ To start, you need to create a free account at [link](opensky-network.org) and v
 devtools::install_github("luisgasco/openskyr")
 library(openskyr)
 library(flightpath)
+library(sf)
 ```
 
 ## Plotting smooth lines with flight data
