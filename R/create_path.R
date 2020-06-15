@@ -4,7 +4,7 @@
 #' @param data sf of points in order, joined with nonspatial flight data representing one aircraft over time.
 #' @param smooth Boolean, default TRUE. which activates the smoothing algorithm from smoothr.
 #' @param method Optional, smoothing algorithm to be used, default ksmooth. See smoothr documentation.
-#' @param smoothness Optional, degree of smoothness, default 1. See smoothr documentation.
+#' @param ... Optional parameters for future use.
 #'
 #' @return sf of linestrings and interpolated nonspatial data.
 #'
@@ -14,6 +14,7 @@
 #' @import smoothr
 #' @import FNN
 #' @import dplyr
+#' @importFrom lwgeom st_split
 #' @export create_path
 
 create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
@@ -27,7 +28,7 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
   #reproject
   data1 = st_transform(data,st_crs(lonlat2UTM(st_coordinates(st_geometry(data[1])))))
   #remove duplicate columns
-  data1 = data1 %>% distinct(time_position,.keep_all=TRUE)
+  data1 = data1 %>% distinct(.keep_all=TRUE)
   #retrieve and save aircraft identifying information
   ic24 = first(data1$icao24)
   cs = first(data1$callsign)
@@ -89,4 +90,24 @@ create_path = function(data, smooth = TRUE, method = "ksmooth", ...){
 
   #return sf
   return(lin_ref)
+}
+
+
+#' @title lonlat2UTM
+#' @name lonlat2UTM
+#' @description calculates EPSG code associated with any point on the planet, from Lovelace 6.3
+#' @param lonlat longitude/latitude coordinates
+#'
+#' @return UTM code
+#'
+#' @import sf
+#' @export
+
+lonlat2UTM = function(lonlat) {
+  utm = (floor((lonlat[1] + 180) / 6) %% 60) + 1
+  if(lonlat[2] > 0) {
+    utm + 32600
+  } else{
+    utm + 32700
+  }
 }

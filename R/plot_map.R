@@ -13,7 +13,7 @@
 #'
 #' @import tmap
 #' @import sf
-#' @import plyr
+#' @import dplyr
 #' @import leaflet
 #' @import spData
 #' @export
@@ -29,7 +29,7 @@ plot_map <- function(data, variable, view = TRUE) {
     bound_box[3] = bound_box[3] + 2
     bound_box[4] = bound_box[4] + 2
 
-    map <- tm_shape(world, bbox = bound_box) +
+    map <- tm_shape(spData::world, bbox = bound_box) +
       tm_polygons() +
       tm_shape(data[variable]) +
       tm_lines(col = variable, lwd = 5) +
@@ -49,4 +49,3 @@ plot_map <- function(data, variable, view = TRUE) {
 
   return(map)
 }
-

@@ -6,6 +6,7 @@
 #' @param password Your 'OpenSky Network' password.
 #' @param duration Amount of time (in seconds) for which to collect live data.
 #' @param icao24 Optional. Unique icao24 identifier for aircraft
+#' @param ... Optional placeholder for future parameters.
 #'
 #' @return If icao24 is missing, A non-spatial dataframe of all state vectors retrieved during the collection period.
 #'   if icao24 specified, A geocoded sf is returned instead.
@@ -19,6 +20,7 @@
 #' @import tidyverse
 #' @import httr
 #' @import tidyr
+#' @importFrom utils head
 #' @export get_live_data
 
 get_live_data <- function(username, password, duration, icao24 = NULL, ...) {

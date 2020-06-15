@@ -18,8 +18,14 @@
 #' \dontrun{get_data(username = "your_username", password = "your_password", icao24 = "a8699a",
 #'  start_seconds_ago = 600, duration = 300)}
 #'
+#' @import openskyr
+#' @import sf
+#' @import tidyverse
+#' @import httr
+#' @import tidyr
+#' @import dplyr
+#' @import jsonlite
 #' @export
-#' @import openskyr, sf, tidyverse, httr, tidyr, rjson, dplyr, jsonlite, RCurl, plyr
 
 get_data <- function(username, password, icao24, start_seconds_ago = NULL, duration = NULL) {
   if (is.null(start_seconds_ago) && is.null(duration)) {

@@ -16,14 +16,10 @@
 #' \dontrun{get_past_data(username = "your_username", password = "your_password",
 #'  start_seconds_ago = 600, icao24 = "3c4b26")}
 #'
-#' @Imports:
-#'     httr,
-#'     sf,
-#'     rjson,
-#'     dplyr,
-#'     jsonlite,
-#'     RCurl,
-#'     plyr
+#' @import httr
+#' @import sf
+#' @import dplyr
+#' @import jsonlite
 #' @export
 
 get_past_data <- function(username, password, start_seconds_ago, icao24) {
@@ -47,13 +43,13 @@ get_past_data <- function(username, password, start_seconds_ago, icao24) {
   }
 
   state_vectors_df <- rename(state_vectors_df, c("states.1" = "icao24", "states.2" = "callsign",
-                             "states.3" = "origin_country", "states.4" = "time_position",
-                             "states.5" = "last_contact", "states.6" = "longitude",
-                             "states.7" = "latitude", "states.8" = "baro_altitude",
-                             "states.9" = "on_ground", "states.10" = "velocity",
-                             "states.11" = "true_track", "states.12" = "vertical_rate",
-                             "states.13" = "sensors", "states.14" = "geo_altitude",
-                             "states.15" = "squawk", "states.16" = "spi", "states.17" = "position_source"))
+                                                 "states.3" = "origin_country", "states.4" = "time_position",
+                                                 "states.5" = "last_contact", "states.6" = "longitude",
+                                                 "states.7" = "latitude", "states.8" = "baro_altitude",
+                                                 "states.9" = "on_ground", "states.10" = "velocity",
+                                                 "states.11" = "true_track", "states.12" = "vertical_rate",
+                                                 "states.13" = "sensors", "states.14" = "geo_altitude",
+                                                 "states.15" = "squawk", "states.16" = "spi", "states.17" = "position_source"))
 
   #changes column data types
   state_vectors_df$time = NULL
