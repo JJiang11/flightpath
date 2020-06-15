@@ -37,9 +37,6 @@ library(flightpath)
 
 We have provided a sample data set, which was created with the get_data() function. Later you will learn how to get data yourself.  
 This dataframe depicts Singapore Airlines flight 38 on the final approach into LAX. It was served by a plane with `icao24` code 76cdb9.
-```{r,echo=FALSE}
-st_crs(sia38) <- 4326
-```
 ```{r,results='hide'}
 plot(sia38)
 ```
